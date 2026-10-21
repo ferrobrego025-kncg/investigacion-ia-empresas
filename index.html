@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="es" class="dark scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transformación de la IA en las Empresas: Arquitectura & Gobernanza</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        darkbg: '#070a11',
+                        cardbg: 'rgba(15, 23, 42, 0.75)',
+                        emeraldAccent: '#10b981',
+                        mintAccent: '#34d399',
+                        amberAccent: '#f59e0b',
+                        cyanAccent: '#06b6d4'
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body {
+            background-color: #070a11;
+            color: #f1f5f9;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+        }
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .glass-panel-glow {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(16, 185, 129, 0.25);
+            box-shadow: 0 0 25px -5px rgba(16, 185, 129, 0.15);
+        }
+        .glow-mint {
+            box-shadow: 0 0 20px rgba(52, 211, 153, 0.25);
+        }
+        .glow-amber {
+            box-shadow: 0 0 20px rgba(245, 158, 11, 0.25);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #070a11;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #10b981;
+        }
+        .pulse-dot {
+            box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+        }
+    </style>
+</head>
+<body class="custom-scrollbar min-h-screen flex flex-col selection:bg-emerald-500 selection:text-black">
+
+    <!-- Progress Bar -->
+    <div id="scroll-progress" class="fixed top-0 left-0 h-1 bg-gradient-to-r from-emerald-500 via-teal-400 to-amber-400 z-50 transition-all duration-150" style="width: 0%"></div>
+
+    <!-- Navigation Header -->
+    <header class="sticky top-0 z-40 glass-panel border-b border-slate-800/80 px-4 lg:px-8 py-3 transition-all duration-300">
+        <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
+            <!-- Brand -->
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-400 to-teal-600 flex items-center justify-center text-slate-950 font-extrabold text-xl shadow-lg shadow-emerald-500/20">
+                    <i class="fa-solid fa-brain"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-base lg:text-lg tracking-tight bg-gradient-to-r from-white via-slate-200 to-emerald-400 bg-clip-text text-transparent">
+                        IA Empresarial
+                    </h1>
+                    <p class="text-xs text-slate-400 font-mono flex items-center gap-2">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 pulse-dot inline-block"></span>
+                        Portal Interactivo de Aprendizaje & Gobernanza
+                    </p>
+                </div>
+            </div>
+
+            <!-- Quick Navigation -->
+            <nav class="hidden md:flex items-center gap-1 text-xs font-medium text-slate-300">
+                <a href="#arquitectura" class="px-3 py-1.5 rounded-lg hover:bg-slate-800/80 hover:text-emerald-400 transition-colors">Arquitectura RAG</a>
+                <a href="#comparativa" class="px-3 py-1.5 rounded-lg hover:bg-slate-800/80 hover:text-emerald-400 transition-colors">Hechos vs Modas</a>
+                <a href="#gobernanza" class="px-3 py-1.5 rounded-lg hover:bg-slate-800/80 hover:text-emerald-400 transition-colors">Datos & PII</a>
+                <a href="#simulador" class="px-3 py-1.5 rounded-lg hover:bg-slate-800/80 hover:text-emerald-400 transition-colors">Simulador RAG</a>
+                <a href="#marcos" class="px-3 py-1.5 rounded-lg hover:bg-slate-800/80 hover:text-emerald-400 transition-colors">Estándares ISO/NIST</a>
+                <a href="#evaluacion" class="px-3 py-1.5 rounded-lg hover:bg-slate-800/80 hover:text-emerald-400 transition-colors">Quiz</a>
+            </nav>
+
+            <!-- Search & Actions -->
+            <div class="flex items-center gap-3">
+                <div class="relative hidden sm:block">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-slate-500 text-xs"></i>
+                    <input type="text" id="global-search" placeholder="Buscar concepto o norma..." 
+                        class="bg-slate-900/90 border border-slate-700/60 rounded-xl pl-8 pr-4 py-1.5 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 w-44 lg:w-60 transition-all">
+                </div>
+                <a href="#simulador" class="bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-slate-950 font-bold text-xs px-3.5 py-2 rounded-xl transition-all shadow-md shadow-emerald-500/20 flex items-center gap-2">
+                    <i class="fa-solid fa-play text-xs"></i>
+                    <span>Simulador</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 lg:px-8 py-8 space-y-12">
+
+        <!-- HERO BANNER -->
+        <section class="relative rounded-3xl p-8 lg:p-12 overflow-hidden border border-slate-800 glass-panel">
+            <div class="absolute -top-24 -right-24 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute -bottom-24 -left-24 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
+            
+            <div class="relative z-10 max-w-3xl space-y-6">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 font-mono text-xs">
+                    <i class="fa-solid fa-layer-group"></i>
+                    <span>Investigación de Gobernanza & Arquitectura de Software</span>
+                </div>
+
+                <h2 class="text-3xl lg:text-5xl font-extrabold tracking-tight leading-tight text-white">
+                    La Transformación de la <span class="bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400 bg-clip-text text-transparent">Inteligencia Artificial</span> en las Empresas
+                </h2>
+
+                <p class="text-slate-300 text-sm lg:text-base leading-relaxed">
+                    La transición efectiva de proyectos piloto aislados hacia arquitecturas sostenibles exige gobernanza rigurosa, enmascaramiento local de PII, trazabilidad del linaje de datos y supervisión <span class="text-emerald-400 font-medium">Human-in-the-Loop</span> sobre los sistemas centrales.
+                </p>
+
+                <!-- Audience Switcher Widget -->
+                <div class="pt-4 border-t border-slate-800/80">
+                    <p class="text-xs font-mono text-slate-400 mb-3 flex items-center gap-2">
+                        <i class="fa-solid fa-sliders text-emerald-400"></i> SELECCIONA EL REGISTRO DE COMUNICACIÓN (AUDIENCIA):
+                    </p>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3" id="audience-selector">
+                        <button onclick="setAudience('ejecutivo')" id="btn-ejecutivo" class="audience-btn active flex items-center gap-3 p-3 rounded-xl border border-emerald-500/50 bg-emerald-500/10 text-emerald-300 font-medium text-xs transition-all text-left">
+                            <i class="fa-solid fa-briefcase text-emerald-400 text-base"></i>
+                            <div>
+                                <div class="font-bold">Ejecutivo</div>
+                                <div class="text-[10px] text-slate-400">Enfoque estratégico</div>
+                            </div>
+                        </button>
+                        <button onclick="setAudience('academico')" id="btn-academico" class="audience-btn flex items-center gap-3 p-3 rounded-xl border border-slate-800 bg-slate-900/60 text-slate-400 font-medium text-xs hover:border-slate-700 transition-all text-left">
+                            <i class="fa-solid fa-graduation-cap text-cyan-400 text-base"></i>
+                            <div>
+                                <div class="font-bold">Académico</div>
+                                <div class="text-[10px] text-slate-400">Sistémico & Regulación</div>
+                            </div>
+                        </button>
+                        <button onclick="setAudience('eli5')" id="btn-eli5" class="audience-btn flex items-center gap-3 p-3 rounded-xl border border-slate-800 bg-slate-900/60 text-slate-400 font-medium text-xs hover:border-slate-700 transition-all text-left">
+                            <i class="fa-solid fa-child text-amber-400 text-base"></i>
+                            <div>
+                                <div class="font-bold">Niño de 10 Años (ELI5)</div>
+                                <div class="text-[10px] text-slate-400">Analogías simples</div>
+                            </div>
+                        </button>
+                    </div>
+
+                    <!-- Dynamic Summary Output -->
+                    <div id="audience-output" class="mt-4 p-4 rounded-2xl bg-slate-950/80 border border-slate-800 text-xs lg:text-sm text-slate-300 leading-relaxed font-sans transition-all">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 1: ARQUITECTURA E INTEGRACIÓN RAG -->
+        <section id="arquitectura" class="space-y-6">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-800 pb-4">
+                <div>
+                    <span class="font-mono text-xs text-emerald-400 uppercase tracking-widest">Capítulo 01</span>
+                    <h3 class="text-2xl font-bold text-white flex items-center gap-3">
+                        Integración de Modelos en la Arquitectura Empresarial
+                    </h3>
+                </div>
+                <div class="text-xs text-slate-400 font-mono">
+                    Arquitecturas Limpias • Microservicios • RAG
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Step 1 -->
+                <div class="glass-panel p-6 rounded-2xl border border-slate-800 hover:border-emerald-500/40 transition-all group">
+                    <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center font-mono font-bold text-lg mb-4 group-hover:scale-110 transition-transform">
+                        01
+                    </div>
+                    <h4 class="font-bold text-white text-base mb-2 flex items-center justify-between">
+                        Selección y Modelado
+                        <i class="fa-solid fa-diagram-project text-xs text-emerald-400"></i>
+                    </h4>
+                    <p class="text-xs text-slate-300 leading-relaxed mb-4">
+                        Evaluación estratégica entre modelos propietarios vía API (OpenAI, Anthropic) vs. modelos open-source alojados localmente (on-premises/nube).
+                    </p>
+                    <div class="bg-slate-950/80 p-3 rounded-xl border border-slate-800 text-[11px] font-mono text-emerald-400 space-y-1">
+                        <div>• Patron: RAG (Retrieval-Augmented)</div>
+                        <div>• Conexión directa a bases de conocimiento</div>
+                        <div>• Evita el reentrenamiento masivo</div>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="glass-panel p-6 rounded-2xl border border-slate-800 hover:border-teal-500/40 transition-all group">
+                    <div class="w-12 h-12 rounded-xl bg-teal-500/10 border border-teal-500/20 text-teal-400 flex items-center justify-center font-mono font-bold text-lg mb-4 group-hover:scale-110 transition-transform">
+                        02
+                    </div>
+                    <h4 class="font-bold text-white text-base mb-2 flex items-center justify-between">
+                        Orquestación & MLOps/LLMOps
+                        <i class="fa-solid fa-gears text-xs text-teal-400"></i>
+                    </h4>
+                    <p class="text-xs text-slate-300 leading-relaxed mb-4">
+                        Configuración de canalizaciones (pipelines) automatizadas para ingesta, validación, despliegue continuo y orquestación de datos.
+                    </p>
+                    <div class="bg-slate-950/80 p-3 rounded-xl border border-slate-800 text-[11px] font-mono text-teal-400 space-y-1">
+                        <div>• Consumo mediante microservicios</div>
+                        <div>• Interfaces API REST / gRPC</div>
+                        <div>• Middleware de aislamiento</div>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="glass-panel p-6 rounded-2xl border border-slate-800 hover:border-amber-500/40 transition-all group">
+                    <div class="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-400 flex items-center justify-center font-mono font-bold text-lg mb-4 group-hover:scale-110 transition-transform">
+                        03
+                    </div>
+                    <h4 class="font-bold text-white text-base mb-2 flex items-center justify-between">
+                        Monitoreo Continuo
+                        <i class="fa-solid fa-chart-line text-xs text-amber-400"></i>
+                    </h4>
+                    <p class="text-xs text-slate-300 leading-relaxed mb-4">
+                        Supervisión técnica constante de métricas operativas y degradación del rendimiento algorítmico en tiempo real.
+                    </p>
+                    <div class="bg-slate-950/80 p-3 rounded-xl border border-slate-800 text-[11px] font-mono text-amber-400 space-y-1">
+                        <div>• Data Drift (Deriva de datos)</div>
+                        <div>• Concept Drift (Deriva de concepto)</div>
+                        <div>• Latencia & Precisión de inferencia</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- INTERACTIVE SIMULATOR RAG -->
+        <section id="simulador" class="glass-panel-glow p-6 lg:p-8 rounded-3xl space-y-6">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800/80 pb-4">
+                <div>
+                    <span class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 font-mono text-xs border border-emerald-500/20">
+                        <i class="fa-solid fa-flask"></i> Laboratorio Interactivo
+                    </span>
+                    <h3 class="text-xl lg:text-2xl font-bold text-white mt-1">
+                        Simulador de Flujo RAG & Enmascaramiento PII
+                    </h3>
+                </div>
+                <div class="text-xs text-slate-400 font-mono">
+                    Prueba cómo la IA responde sin ver datos privados
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- Input Panel -->
+                <div class="space-y-4">
+                    <label class="block text-xs font-mono text-slate-300">
+                        1. CONSULTA DE EMPLEADO (Ingresa un texto con datos confidenciales):
+                    </label>
+                    <div class="relative">
+                        <textarea id="sim-input" rows="4" 
+                            class="w-full bg-slate-950 border border-slate-800 rounded-2xl p-4 text-xs font-mono text-slate-200 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none transition-all"
+                            placeholder="Ejemplo: Solícito evaluar aprobación de crédito de $85,000 para el cliente Juan Pérez con RFC PEJU890102."></textarea>
+                        <button onclick="setExamplePrompt()" class="absolute right-3 bottom-3 text-[10px] bg-slate-800 hover:bg-slate-700 text-slate-300 font-mono px-2 py-1 rounded-lg border border-slate-700 transition-colors">
+                            Cargar Ejemplo
+                        </button>
+                    </div>
+
+                    <div class="flex items-center gap-3">
+                        <button onclick="runRAGSimulation()" class="flex-1 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-400 hover:to-teal-500 text-slate-950 font-bold text-xs py-3 rounded-xl transition-all shadow-lg shadow-emerald-500/20 flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-microchip"></i>
+                            <span>Ejecutar Canalización RAG</span>
+                        </button>
+                        <button onclick="resetRAGSimulation()" class="bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-white px-4 py-3 rounded-xl border border-slate-800 text-xs font-mono transition-colors">
+                            Limpiar
+                        </button>
+                    </div>
+
+                    <!-- Flow Diagram Visual -->
+                    <div class="p-4 rounded-2xl bg-slate-950/60 border border-slate-800/80 text-[11px] font-mono text-slate-400 space-y-2">
+                        <div class="font-bold text-slate-300 flex items-center justify-between">
+                            <span>Pasos de Seguridad Interna:</span>
+                            <span class="text-emerald-400">Zero-Data Leakage</span>
+                        </div>
+                        <div class="flex items-center gap-2 text-slate-500" id="step-1-status">
+                            <i class="fa-regular fa-circle text-xs"></i> 1. Enmascaramiento Local PII ([CLIENTE_01])
+                        </div>
+                        <div class="flex items-center gap-2 text-slate-500" id="step-2-status">
+                            <i class="fa-regular fa-circle text-xs"></i> 2. Búsqueda Vectorial Semántica (Cosine Sim > 0.88)
+                        </div>
+                        <div class="flex items-center gap-2 text-slate-500" id="step-3-status">
+                            <i class="fa-regular fa-circle text-xs"></i> 3. Generación Contextual LLM
+                        </div>
+                        <div class="flex items-center gap-2 text-slate-500" id="step-4-status">
+                            <i class="fa-regular fa-circle text-xs"></i> 4. Validación Human-in-the-Loop (HITL)
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Simulation Output Panel -->
+                <div class="space-y-4 flex flex-col justify-between">
+                    <!-- Step Outputs -->
+                    <div class="space-y-3">
+                        <div>
+                            <div class="text-[11px] font-mono text-amber-400 mb-1 flex items-center justify-between">
+                                <span>DATOS ENMASCARADOS ENVIADOS AL MODELO:</span>
+                                <span class="text-[10px] text-slate-500">Middleware Local</span>
+                            </div>
+                            <div id="sim-masked-output" class="p-3 rounded-xl bg-slate-950 border border-slate-800 text-xs font-mono text-amber-300/90 min-h-[48px] flex items-center italic">
+                                Esperando entrada...
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="text-[11px] font-mono text-cyan-400 mb-1 flex items-center justify-between">
+                                <span>DOCUMENTO RECUPERADO DE BASE VECTORIAL:</span>
+                                <span class="text-[10px] text-slate-500">Pinecone / ChromaDB</span>
+                            </div>
+                            <div id="sim-vector-output" class="p-3 rounded-xl bg-slate-950 border border-slate-800 text-xs font-mono text-cyan-300/90 min-h-[48px] flex items-center italic">
+                                Sin documento consultado.
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="text-[11px] font-mono text-emerald-400 mb-1 flex items-center justify-between">
+                                <span>RESPUESTA FINAL GENERADA (LLM + HITL):</span>
+                                <span id="hitl-badge" class="hidden text-[10px] px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30">Requiere Aprobación Humana</span>
+                            </div>
+                            <div id="sim-llm-output" class="p-4 rounded-xl bg-slate-950 border border-slate-800 text-xs text-slate-200 min-h-[80px] leading-relaxed">
+                                Haz clic en 'Ejecutar Canalización RAG' para observar el procesamiento en tiempo real.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: HECHOS VS MODAS (TABLA INTERACTIVA) -->
+        <section id="comparativa" class="space-y-6">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-800 pb-4">
+                <div>
+                    <span class="font-mono text-xs text-emerald-400 uppercase tracking-widest">Capítulo 02</span>
+                    <h3 class="text-2xl font-bold text-white">
+                        Diferenciación: Hechos Tecnológicos vs. Modas Empresariales
+                    </h3>
+                </div>
+                <div class="flex items-center gap-2 bg-slate-900 p-1 rounded-xl border border-slate-800">
+                    <button onclick="filterTable('all')" id="tab-all" class="px-3 py-1 text-xs rounded-lg font-medium text-emerald-400 bg-slate-800 transition-colors">Todos</button>
+                    <button onclick="filterTable('integracion')" id="tab-integracion" class="px-3 py-1 text-xs rounded-lg font-medium text-slate-400 hover:text-white transition-colors">Integración</button>
+                    <button onclick="filterTable('datos')" id="tab-datos" class="px-3 py-1 text-xs rounded-lg font-medium text-slate-400 hover:text-white transition-colors">Datos</button>
+                    <button onclick="filterTable('laboral')" id="tab-laboral" class="px-3 py-1 text-xs rounded-lg font-medium text-slate-400 hover:text-white transition-colors">Laboral</button>
+                </div>
+            </div>
+
+            <div class="overflow-x-auto rounded-2xl border border-slate-800 glass-panel">
+                <table class="w-full text-left border-collapse text-xs">
+                    <thead>
+                        <tr class="bg-slate-950/80 border-b border-slate-800 text-slate-400 font-mono">
+                            <th class="p-4 w-1/4">Dimensión</th>
+                            <th class="p-4 w-3/8 text-emerald-400">
+                                <i class="fa-solid fa-circle-check mr-1"></i> Hecho Tecnológico (Realidad)
+                            </th>
+                            <th class="p-4 w-3/8 text-rose-400">
+                                <i class="fa-solid fa-circle-xmark mr-1"></i> Moda / Hype Empresarial (Mito)
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-800/60 font-sans" id="comparison-tbody">
+                        <tr class="table-row-item hover:bg-slate-800/40 transition-colors" data-category="integracion">
+                            <td class="p-4 font-bold text-white font-mono flex items-center gap-2">
+                                <i class="fa-solid fa-plug text-emerald-400"></i> Integración de IA
+                            </td>
+                            <td class="p-4 text-slate-300 leading-relaxed">
+                                Extensión de capacidades mediante arquitectura RAG y orquestación de middleware sobre sistemas existentes (ERP/CRM).
+                            </td>
+                            <td class="p-4 text-slate-400 leading-relaxed bg-rose-950/10">
+                                Sustitución inmediata de sistemas centrales por agentes 100% autónomos sin supervisión.
+                            </td>
+                        </tr>
+                        <tr class="table-row-item hover:bg-slate-800/40 transition-colors" data-category="datos">
+                            <td class="p-4 font-bold text-white font-mono flex items-center gap-2">
+                                <i class="fa-solid fa-database text-cyan-400"></i> Manejo de Datos
+                            </td>
+                            <td class="p-4 text-slate-300 leading-relaxed">
+                                Requisito de datos limpios, estructurados, etiquetados y con linaje auditado antes de alimentarlos a modelos.
+                            </td>
+                            <td class="p-4 text-slate-400 leading-relaxed bg-rose-950/10">
+                                Creación de lagos de datos masivos sin gobernanza previa (<span class="italic text-rose-300">Data Swamps</span>).
+                            </td>
+                        </tr>
+                        <tr class="table-row-item hover:bg-slate-800/40 transition-colors" data-category="laboral">
+                            <td class="p-4 font-bold text-white font-mono flex items-center gap-2">
+                                <i class="fa-solid fa-users-gear text-amber-400"></i> Impacto Laboral
+                            </td>
+                            <td class="p-4 text-slate-300 leading-relaxed">
+                                Rediseño de flujos de trabajo con supervisión e interacción <span class="text-emerald-400 font-semibold">Human-in-the-Loop</span>.
+                            </td>
+                            <td class="p-4 text-slate-400 leading-relaxed bg-rose-950/10">
+                                Eliminación masiva de departamentos enteros sin costo ni necesidad de verificación.
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- SECTION 3: GOBERNANZA DE DATOS Y PII -->
+        <section id="gobernanza" class="space-y-6">
+            <div class="border-b border-slate-800 pb-4">
+                <span class="font-mono text-xs text-emerald-400 uppercase tracking-widest">Capítulo 03</span>
+                <h3 class="text-2xl font-bold text-white">
+                    Manejo de Datos, Privacidad & Gobernanza Tecnológica
+                </h3>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="glass-panel p-6 rounded-2xl border border-slate-800 space-y-3">
+                    <div class="w-10 h-10 rounded-xl bg-cyan-500/10 text-cyan-400 flex items-center justify-center font-bold">
+                        <i class="fa-solid fa-filter"></i>
+                    </div>
+                    <h4 class="font-bold text-white text-base">Ingesta y Preparación</h4>
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        Procesos ETL/ELT adaptados para procesar información estructurada y no estructurada. Implementación de bases de datos vectoriales para indexación semántica.
+                    </p>
+                </div>
+
+                <div class="glass-panel p-6 rounded-2xl border border-slate-800 space-y-3">
+                    <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center font-bold">
+                        <i class="fa-solid fa-user-shield"></i>
+                    </div>
+                    <h4 class="font-bold text-white text-base">Privacidad y Seguridad</h4>
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        Aplicación estricta de anonimización, enmascaramiento de datos personales (PII) y controles de acceso basados en roles (RBAC) previa salida a proveedores de IA.
+                    </p>
+                </div>
+
+                <div class="glass-panel p-6 rounded-2xl border border-slate-800 space-y-3">
+                    <div class="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center font-bold">
+                        <i class="fa-solid fa-route"></i>
+                    </div>
+                    <h4 class="font-bold text-white text-base">Linaje y Trazabilidad</h4>
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        Registro sistemático del origen, fecha y transformación de los datos para garantizar la auditabilidad y explicabilidad de las decisiones tomadas por el sistema.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: MARCOS NORMALIZADOS E ISO/NIST -->
+        <section id="marcos" class="space-y-6">
+            <div class="border-b border-slate-800 pb-4">
+                <span class="font-mono text-xs text-emerald-400 uppercase tracking-widest">Capítulo 04</span>
+                <h3 class="text-2xl font-bold text-white">
+                    Marcos Normalizados y Estándares Internacionales
+                </h3>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="glass-panel p-5 rounded-2xl border border-slate-800 hover:border-emerald-500/30 transition-all">
+                    <div class="font-mono text-xs text-emerald-400 font-bold mb-1">ISO/IEC 42001</div>
+                    <h5 class="font-bold text-white text-sm mb-2">AIMS Standard</h5>
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        Estándar internacional para el establecimiento y mejora continua de un Sistema de Gestión de Inteligencia Artificial en organizaciones.
+                    </p>
+                </div>
+
+                <div class="glass-panel p-5 rounded-2xl border border-slate-800 hover:border-teal-500/30 transition-all">
+                    <div class="font-mono text-xs text-teal-400 font-bold mb-1">NIST AI RMF 1.0</div>
+                    <h5 class="font-bold text-white text-sm mb-2">Risk Management</h5>
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        Marco de referencia para la identificación, mapeo, medición y gestión de riesgos asociados a la confiabilidad y seguridad de la IA.
+                    </p>
+                </div>
+
+                <div class="glass-panel p-5 rounded-2xl border border-slate-800 hover:border-amber-500/30 transition-all">
+                    <div class="font-mono text-xs text-amber-400 font-bold mb-1">DAMA-DMBOK</div>
+                    <h5 class="font-bold text-white text-sm mb-2">Data Governance</h5>
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        Guía estándar para estructurar la gobernanza, calidad, arquitectura y seguridad integral de los datos corporativos.
+                    </p>
+                </div>
+
+                <div class="glass-panel p-5 rounded-2xl border border-slate-800 hover:border-cyan-500/30 transition-all">
+                    <div class="font-mono text-xs text-cyan-400 font-bold mb-1">TOGAF / COBIT</div>
+                    <h5 class="font-bold text-white text-sm mb-2">Enterprise Arch.</h5>
+                    <p class="text-xs text-slate-300 leading-relaxed">
+                        Marcos de arquitectura empresarial y gobierno de TI esenciales para alinear la infraestructura de IA con las metas del negocio.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Coexistence & Sector Adaptation -->
+            <div class="p-6 rounded-2xl bg-slate-950/80 border border-slate-800 space-y-4">
+                <h4 class="font-bold text-white text-sm font-mono flex items-center gap-2">
+                    <i class="fa-solid fa-circle-info text-emerald-400"></i> ¿POR QUÉ COEXISTEN TANTOS ESTÁNDARES?
+                </h4>
+                <p class="text-xs text-slate-300 leading-relaxed">
+                    Cada estándar atiende un nivel distinto de la organización: estrategia corporativa (TOGAF/COBIT), calidad del dato (DAMA-DMBOK), mitigación de riesgo algorítmico (NIST AI RMF) y cumplimiento normativo integral (ISO 42001).
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+                    <div class="p-3 rounded-xl bg-slate-900 border border-slate-800 text-xs">
+                        <span class="font-bold text-emerald-400 block mb-1">Sector Banca</span>
+                        Regulaciones financieras estrictas, riesgo crediticio y auditoría de decisiones automatizadas.
+                    </div>
+                    <div class="p-3 rounded-xl bg-slate-900 border border-slate-800 text-xs">
+                        <span class="font-bold text-cyan-400 block mb-1">Sector Salud</span>
+                        Protección crítica de datos clínicos sensibles, vidas humanas y privacidad ultra confidencial.
+                    </div>
+                    <div class="p-3 rounded-xl bg-slate-900 border border-slate-800 text-xs">
+                        <span class="font-bold text-amber-400 block mb-1">Sector Logística</span>
+                        Optimización de rutas de carga, predicción de inventario e integración en cadena de suministro.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 5: RESPUESTAS CLAVE A PREGUNTAS CLAVE (ACORDEÓN) -->
+        <section id="preguntas" class="space-y-6">
+            <div class="border-b border-slate-800 pb-4">
+                <span class="font-mono text-xs text-emerald-400 uppercase tracking-widest">Capítulo 05</span>
+                <h3 class="text-2xl font-bold text-white">
+                    Respuestas Clave sobre IA Empresarial (Acordeón)
+                </h3>
+            </div>
+
+            <div class="space-y-3" id="faq-accordion">
+                <!-- Q1 -->
+                <div class="glass-panel rounded-2xl border border-slate-800 overflow-hidden">
+                    <button onclick="toggleFaq(1)" class="w-full p-5 text-left font-bold text-white text-sm flex items-center justify-between hover:bg-slate-800/50 transition-colors">
+                        <span class="flex items-center gap-3">
+                            <span class="w-6 h-6 rounded-lg bg-emerald-500/10 text-emerald-400 text-xs font-mono flex items-center justify-center">1</span>
+                            ¿Cómo funciona exactamente conectar la IA a la información interna sin reentrenar (RAG)?
+                        </span>
+                        <i id="faq-icon-1" class="fa-solid fa-chevron-down text-slate-500 text-xs transition-transform"></i>
+                    </button>
+                    <div id="faq-content-1" class="hidden p-5 pt-0 text-xs text-slate-300 leading-relaxed border-t border-slate-800/50 bg-slate-950/40">
+                        Funciona como un <span class="text-emerald-400 font-semibold">examen a libro abierto</span>. El modelo general de IA se conecta a un motor de búsqueda interno (base vectorial) que localiza los documentos exactos de la empresa en el momento y se los entrega como contexto inmediato para que elabore la respuesta, sin alterar sus parámetros originales.
+                    </div>
+                </div>
+
+                <!-- Q2 -->
+                <div class="glass-panel rounded-2xl border border-slate-800 overflow-hidden">
+                    <button onclick="toggleFaq(2)" class="w-full p-5 text-left font-bold text-white text-sm flex items-center justify-between hover:bg-slate-800/50 transition-colors">
+                        <span class="flex items-center gap-3">
+                            <span class="w-6 h-6 rounded-lg bg-emerald-500/10 text-emerald-400 text-xs font-mono flex items-center justify-center">2</span>
+                            ¿Por qué es un mito reemplazar sistemas ERP/CRM por LLMs?
+                        </span>
+                        <i id="faq-icon-2" class="fa-solid fa-chevron-down text-slate-500 text-xs transition-transform"></i>
+                    </button>
+                    <div id="faq-content-2" class="hidden p-5 pt-0 text-xs text-slate-300 leading-relaxed border-t border-slate-800/50 bg-slate-950/40">
+                        Los ERP y CRM ejecutan la contabilidad y la logística con precisión exacta e inmutable. Como la IA generativa funciona por <span class="text-amber-400 font-semibold">probabilidades</span>, usarla para reemplazar el núcleo transaccional generaría desajustes contables y operativos inaceptables.
+                    </div>
+                </div>
+
+                <!-- Q3 -->
+                <div class="glass-panel rounded-2xl border border-slate-800 overflow-hidden">
+                    <button onclick="toggleFaq(3)" class="w-full p-5 text-left font-bold text-white text-sm flex items-center justify-between hover:bg-slate-800/50 transition-colors">
+                        <span class="flex items-center gap-3">
+                            <span class="w-6 h-6 rounded-lg bg-emerald-500/10 text-emerald-400 text-xs font-mono flex items-center justify-center">3</span>
+                            ¿Cómo se garantizan los datos privados previa consulta a la IA?
+                        </span>
+                        <i id="faq-icon-3" class="fa-solid fa-chevron-down text-slate-500 text-xs transition-transform"></i>
+                    </button>
+                    <div id="faq-content-3" class="hidden p-5 pt-0 text-xs text-slate-300 leading-relaxed border-t border-slate-800/50 bg-slate-950/40">
+                        Antes de enviar la consulta a la IA, un software local de enmascaramiento detecta el texto sensible y reemplaza nombres, números o montos por códigos genéricos (por ejemplo, <code class="font-mono text-emerald-400">[CLIENTE_01]</code>). La IA procesa la idea lógica sin ver la información confidencial real.
+                    </div>
+                </div>
+
+                <!-- Q4 -->
+                <div class="glass-panel rounded-2xl border border-slate-800 overflow-hidden">
+                    <button onclick="toggleFaq(4)" class="w-full p-5 text-left font-bold text-white text-sm flex items-center justify-between hover:bg-slate-800/50 transition-colors">
+                        <span class="flex items-center gap-3">
+                            <span class="w-6 h-6 rounded-lg bg-emerald-500/10 text-emerald-400 text-xs font-mono flex items-center justify-center">4</span>
+                            ¿Qué es el Linaje de datos (Data Lineage)?
+                        </span>
+                        <i id="faq-icon-4" class="fa-solid fa-chevron-down text-slate-500 text-xs transition-transform"></i>
+                    </button>
+                    <div id="faq-content-4" class="hidden p-5 pt-0 text-xs text-slate-300 leading-relaxed border-t border-slate-800/50 bg-slate-950/40">
+                        Es una bitácora digital que registra el archivo, fecha y párrafo exactos que la IA utilizó para dar una respuesta. Si la IA comete un error, este registro permite auditar la fuente precisa que provocó la falla.
+                    </div>
+                </div>
+
+                <!-- Q5 -->
+                <div class="glass-panel rounded-2xl border border-slate-800 overflow-hidden">
+                    <button onclick="toggleFaq(5)" class="w-full p-5 text-left font-bold text-white text-sm flex items-center justify-between hover:bg-slate-800/50 transition-colors">
+                        <span class="flex items-center gap-3">
+                            <span class="w-6 h-6 rounded-lg bg-emerald-500/10 text-emerald-400 text-xs font-mono flex items-center justify-center">5</span>
+                            ¿Cómo opera la supervisión humana eficiente (Human-in-the-Loop)?
+                        </span>
+                        <i id="faq-icon-5" class="fa-solid fa-chevron-down text-slate-500 text-xs transition-transform"></i>
+                    </button>
+                    <div id="faq-content-5" class="hidden p-5 pt-0 text-xs text-slate-300 leading-relaxed border-t border-slate-800/50 bg-slate-950/40">
+                        Se aplican umbrales de riesgo. La IA atiende directamente tareas automatizadas de bajo impacto (como resumir un documento público), pero en decisiones sensibles (como aprobar un crédito) la IA solo redacta la sugerencia y exige la validación expresa de un empleado antes de ejecutarla.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 6: EVALUACIÓN Y QUIZ INTERACTIVO -->
+        <section id="evaluacion" class="glass-panel p-6 lg:p-8 rounded-3xl border border-slate-800 space-y-6">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-800 pb-4">
+                <div>
+                    <span class="font-mono text-xs text-emerald-400 uppercase tracking-widest">Capítulo 06</span>
+                    <h3 class="text-2xl font-bold text-white flex items-center gap-2">
+                        <i class="fa-solid fa-graduation-cap text-emerald-400"></i> Test de Conocimientos en IA Empresarial
+                    </h3>
+                </div>
+                <div class="text-xs font-mono text-slate-400">
+                    Puntuación: <span id="quiz-score" class="text-emerald-400 font-bold">0</span> / 4
+                </div>
+            </div>
+
+            <div class="space-y-6" id="quiz-container">
+                <!-- Q1 -->
+                <div class="p-5 rounded-2xl bg-slate-950/60 border border-slate-800 space-y-3">
+                    <p class="text-xs font-bold text-slate-200">1. ¿Por qué NO se debe reemplazar el núcleo del ERP/CRM por un Modelo de Lenguaje (LLM)?</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs">
+                        <button onclick="checkAnswer(1, false, this)" class="quiz-btn p-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-left text-slate-300 border border-slate-800 transition-colors">a) Porque los LLM consumen demasiada energía eléctrica.</button>
+                        <button onclick="checkAnswer(1, true, this)" class="quiz-btn p-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-left text-slate-300 border border-slate-800 transition-colors">b) Porque los LLM son probabilísticos y la contabilidad exige precisión determinista.</button>
+                    </div>
+                </div>
+
+                <!-- Q2 -->
+                <div class="p-5 rounded-2xl bg-slate-950/60 border border-slate-800 space-y-3">
+                    <p class="text-xs font-bold text-slate-200">2. En una arquitectura RAG, ¿qué función cumple la base de datos vectorial?</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs">
+                        <button onclick="checkAnswer(2, true, this)" class="quiz-btn p-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-left text-slate-300 border border-slate-800 transition-colors">a) Permite búsqueda semántica en la información corporativa para dar contexto al modelo.</button>
+                        <button onclick="checkAnswer(2, false, this)" class="quiz-btn p-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-left text-slate-300 border border-slate-800 transition-colors">b) Reentrena los pesos del modelo base cada vez que el usuario hace una pregunta.</button>
+                    </div>
+                </div>
+
+                <!-- Q3 -->
+                <div class="p-5 rounded-2xl bg-slate-950/60 border border-slate-800 space-y-3">
+                    <p class="text-xs font-bold text-slate-200">3. ¿Qué representa el concepto Human-in-the-Loop (HITL)?</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs">
+                        <button onclick="checkAnswer(3, false, this)" class="quiz-btn p-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-left text-slate-300 border border-slate-800 transition-colors">a) La sustitución completa de empleados por bots autónomos en la empresa.</button>
+                        <button onclick="checkAnswer(3, true, this)" class="quiz-btn p-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-left text-slate-300 border border-slate-800 transition-colors">b) Un control donde decisiones críticas de la IA deben ser validadas por una persona.</button>
+                    </div>
+                </div>
+
+                <!-- Q4 -->
+                <div class="p-5 rounded-2xl bg-slate-950/60 border border-slate-800 space-y-3">
+                    <p class="text-xs font-bold text-slate-200">4. ¿Para qué se utiliza el enmascaramiento de PII?</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs">
+                        <button onclick="checkAnswer(4, true, this)" class="quiz-btn p-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-left text-slate-300 border border-slate-800 transition-colors">a) Ocultar datos privados (nombres, montos) antes de enviar la consulta al proveedor de IA.</button>
+                        <button onclick="checkAnswer(4, false, this)" class="quiz-btn p-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-left text-slate-300 border border-slate-800 transition-colors">b) Aumentar la velocidad de conexión a internet durante la llamada API.</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 7: GUÍA DE MEJORA DE PROMPTS -->
+        <section id="prompts" class="glass-panel p-6 rounded-3xl border border-slate-800 space-y-4">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+                <h4 class="font-bold text-white text-base flex items-center gap-2">
+                    <i class="fa-solid fa-wand-magic-sparkles text-amber-400"></i> Guía de Refinamiento de Prompts para la Siguiente Iteración
+                </h4>
+                <button onclick="copyPromptGuide()" class="text-xs bg-slate-800 hover:bg-slate-700 text-slate-300 px-3 py-1.5 rounded-lg border border-slate-700 font-mono transition-colors">
+                    <i class="fa-regular fa-copy mr-1"></i> Copiar Guía
+                </button>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+                <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-2">
+                    <div class="font-bold text-emerald-400 font-mono">1. Delimitar el Dominio</div>
+                    <p class="text-slate-300 leading-relaxed">
+                        Especificar una industria o sector (ej. banca, salud o logística) para enfocar los patrones de integración y regulación aplicables.
+                    </p>
+                </div>
+
+                <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-2">
+                    <div class="font-bold text-cyan-400 font-mono">2. Formato de Salida Técnico</div>
+                    <p class="text-slate-300 leading-relaxed">
+                        Solicitar diagramas de secuencia o arquitectura (por ejemplo en sintaxis PlantUML o Mermaid) para visualizar el flujo de datos.
+                    </p>
+                </div>
+
+                <div class="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-2">
+                    <div class="font-bold text-amber-400 font-mono">3. Restricciones Tecnológicas</div>
+                    <p class="text-slate-300 leading-relaxed">
+                        Indicar premisas específicas de infraestructura (ej. despliegue On-Premises vs. Cloud Multi-tenant) y marcos legales aplicables.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-800/80 bg-slate-950/80 py-8 px-4 text-center text-xs text-slate-500 font-mono">
+        <div class="max-w-7xl mx-auto space-y-2">
+            <p>Portal Académico & Corporativo de Inteligencia Artificial • Listo para GitHub Pages</p>
+            <p class="text-slate-600">Basado en estándares ISO/IEC 42001, NIST AI RMF, DAMA-DMBOK y TOGAF</p>
+        </div>
+    </footer>
+
+    <!-- INTERACTIVE JAVASCRIPT LOGIC -->
+    <script>
+        // --- 1. AUDIENCE MODE SWITCHER ---
+        const audienceData = {
+            ejecutivo: {
+                title: "Resumen Ejecutivo (Estratégico)",
+                text: "La integración efectiva de la IA en organizaciones requiere conectar el conocimiento interno de forma segura mediante arquitecturas RAG, manteniendo intactos los sistemas transaccionales tradicionales (ERP/CRM). El éxito operativo reside en la trazabilidad de los datos, la supervisión humana basada en riesgos y la adopción de marcos normativos globales."
+            },
+            academico: {
+                title: "Expresión Académica (Sistémica)",
+                text: "La adopción de modelos de inteligencia artificial en entornos corporativos constituye un proceso de orquestación sistémica donde la arquitectura RAG, la gobernanza de datos y los marcos de gestión de riesgos regulados (ISO/NIST) convergen para optimizar la toma de decisiones mediante esquemas de control Human-in-the-Loop."
+            },
+            eli5: {
+                title: "Explicación para un Niño de 10 Años (ELI5)",
+                text: "Imagina que la IA es un estudiante graduado muy inteligente, pero que no conoce tu escuela. En vez de hacer que vuelva a cursar desde kínder para aprender todo de nuevo (reentrenarla), le das los cuadernos de tu clase para que revise los apuntes cuando le hagas una pregunta. Además, un profesor revisa siempre sus respuestas antes de entregarlas para asegurarse de que no haya inventado nada."
+            }
+        };
+
+        function setAudience(type) {
+            document.querySelectorAll('.audience-btn').forEach(btn => {
+                btn.classList.remove('border-emerald-500/50', 'bg-emerald-500/10', 'text-emerald-300');
+                btn.classList.add('border-slate-800', 'bg-slate-900/60', 'text-slate-400');
+            });
+
+            const activeBtn = document.getElementById(`btn-${type}`);
+            activeBtn.classList.remove('border-slate-800', 'bg-slate-900/60', 'text-slate-400');
+            activeBtn.classList.add('border-emerald-500/50', 'bg-emerald-500/10', 'text-emerald-300');
+
+            const outputDiv = document.getElementById('audience-output');
+            const data = audienceData[type];
+            outputDiv.innerHTML = `
+                <div class="font-bold text-white mb-1 font-mono text-xs flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400"></span> ${data.title}
+                </div>
+                <div>${data.text}</div>
+            `;
+        }
+
+        // Initialize default audience
+        setAudience('ejecutivo');
+
+        // --- 2. RAG & PII SIMULATOR ---
+        function setExamplePrompt() {
+            document.getElementById('sim-input').value = "Solicito evaluar aprobación de crédito de $85,000 para el cliente Juan Pérez con RFC PEJU890102.";
+        }
+
+        function runRAGSimulation() {
+            const rawText = document.getElementById('sim-input').value.trim();
+            if (!rawText) {
+                alert("Por favor ingresa una consulta en la caja de texto.");
+                return;
+            }
+
+            // Step 1: Anonymize
+            let masked = rawText;
+            masked = masked.replace(/Juan Pérez|María López|Carlos Gómez/gi, "[CLIENTE_01]");
+            masked = masked.replace(/\$85,000|\$50,000|\$\d+/g, "[MONTO_SOLICITADO]");
+            masked = masked.replace(/PEJU890102|[A-Z]{4}\d{6}[A-Z0-9]{3}/gi, "[RFC_CONFIDENCIAL]");
+
+            document.getElementById('sim-masked-output').innerText = masked;
+            document.getElementById('step-1-status').className = "flex items-center gap-2 text-emerald-400 font-bold";
+
+            // Step 2: Vector Search Simulation
+            setTimeout(() => {
+                document.getElementById('sim-vector-output').innerText = "DOC_ID #9042: 'Política Interna de Créditos v4.2 - Umbral de riesgo para montos superiores a $50,000 exige firma de Oficial de Cumplimiento.' (Cosine Sim: 0.94)";
+                document.getElementById('step-2-status').className = "flex items-center gap-2 text-cyan-400 font-bold";
+            }, 300);
+
+            // Step 3 & 4: LLM Output & HITL Check
+            setTimeout(() => {
+                document.getElementById('step-3-status').className = "flex items-center gap-2 text-emerald-400 font-bold";
+                document.getElementById('step-4-status').className = "flex items-center gap-2 text-amber-400 font-bold";
+                document.getElementById('hitl-badge').classList.remove('hidden');
+
+                document.getElementById('sim-llm-output').innerHTML = `
+                    <p class="text-slate-200">Se ha analizado la solicitud para <span class="font-mono text-emerald-400">[CLIENTE_01]</span> sobre el monto <span class="font-mono text-emerald-400">[MONTO_SOLICITADO]</span>.</p>
+                    <p class="text-slate-300 mt-2 text-[11px]"><strong class="text-amber-400">Recomendación Algorítmica:</strong> Pre-aprobación sujeta a revisión. El monto excede el umbral automatizado. Se requiere la validación explícita del gerente de riesgo en el sistema CRM antes del desembolso.</p>
+                `;
+            }, 600);
+        }
+
+        function resetRAGSimulation() {
+            document.getElementById('sim-input').value = "";
+            document.getElementById('sim-masked-output').innerText = "Esperando entrada...";
+            document.getElementById('sim-vector-output').innerText = "Sin documento consultado.";
+            document.getElementById('sim-llm-output').innerText = "Haz clic en 'Ejecutar Canalización RAG' para observar el procesamiento en tiempo real.";
+            document.getElementById('hitl-badge').classList.add('hidden');
+            
+            ['step-1-status', 'step-2-status', 'step-3-status', 'step-4-status'].forEach(id => {
+                document.getElementById(id).className = "flex items-center gap-2 text-slate-500";
+            });
+        }
+
+        // --- 3. FILTER COMPARISON TABLE ---
+        function filterTable(category) {
+            const rows = document.querySelectorAll('.table-row-item');
+            rows.forEach(row => {
+                if (category === 'all' || row.dataset.category === category) {
+                    row.style.display = 'table-row';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+
+            ['all', 'integracion', 'datos', 'laboral'].forEach(cat => {
+                const btn = document.getElementById(`tab-${cat}`);
+                if (cat === category) {
+                    btn.className = "px-3 py-1 text-xs rounded-lg font-medium text-emerald-400 bg-slate-800 transition-colors";
+                } else {
+                    btn.className = "px-3 py-1 text-xs rounded-lg font-medium text-slate-400 hover:text-white transition-colors";
+                }
+            });
+        }
+
+        // --- 4. ACCORDION FAQ TOGGLE ---
+        function toggleFaq(id) {
+            const content = document.getElementById(`faq-content-${id}`);
+            const icon = document.getElementById(`faq-icon-${id}`);
+            if (content.classList.contains('hidden')) {
+                content.classList.remove('hidden');
+                icon.style.transform = 'rotate(180deg)';
+            } else {
+                content.classList.add('hidden');
+                icon.style.transform = 'rotate(0deg)';
+            }
+        }
+
+        // --- 5. QUIZ ENGINE ---
+        let quizScore = 0;
+        const answeredQuestions = new Set();
+
+        function checkAnswer(qNum, isCorrect, btnElement) {
+            if (answeredQuestions.has(qNum)) return;
+            answeredQuestions.add(qNum);
+
+            const parentDiv = btnElement.parentElement;
+            const buttons = parentDiv.querySelectorAll('button');
+
+            buttons.forEach(b => {
+                b.disabled = true;
+                b.classList.add('opacity-60', 'cursor-not-allowed');
+            });
+
+            if (isCorrect) {
+                btnElement.classList.remove('bg-slate-900', 'border-slate-800', 'opacity-60');
+                btnElement.classList.add('bg-emerald-500/20', 'border-emerald-500', 'text-emerald-300', 'font-bold');
+                quizScore++;
+                document.getElementById('quiz-score').innerText = quizScore;
+            } else {
+                btnElement.classList.remove('bg-slate-900', 'border-slate-800', 'opacity-60');
+                btnElement.classList.add('bg-rose-500/20', 'border-rose-500', 'text-rose-300', 'font-bold');
+            }
+        }
+
+        // --- 6. SCROLL PROGRESS BAR ---
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('scroll-progress').style.width = scrolled + '%';
+        });
+
+        // --- 7. GLOBAL SEARCH ---
+        document.getElementById('global-search').addEventListener('input', function(e) {
+            const query = e.target.value.toLowerCase().trim();
+            if (!query) return;
+
+            const sections = document.querySelectorAll('main section');
+            sections.forEach(sec => {
+                const text = sec.innerText.toLowerCase();
+                if (text.includes(query)) {
+                    sec.style.opacity = '1';
+                } else {
+                    sec.style.opacity = '0.35';
+                }
+            });
+
+            if (query === '') {
+                sections.forEach(sec => sec.style.opacity = '1');
+            }
+        });
+
+        // Copy prompt guide
+        function copyPromptGuide() {
+            const guideText = "Guía de Refinamiento de Prompts para la Siguiente Iteración:\n1. Delimitar el Dominio de Aplicación (Banca, Salud, Logística).\n2. Definir Formato de Salida Técnico (PlantUML / Mermaid).\n3. Establecer Restricciones Tecnológicas (On-Premises, ISO 42001, Leyes de PII).";
+            navigator.clipboard.writeText(guideText).then(() => {
+                alert("Guía copiada al portapapeles.");
+            });
+        }
+    </script>
+</body>
+</html>
